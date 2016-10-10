@@ -73,6 +73,7 @@
                         <a href="{{ url('/register') }}">Register</a>
                     @else
                         <a href="{{ url('/dashboard') }}"> {{ Auth::user()->name }} </a>
+                        <a href="{{ url('/dashboard') }}">Dashboard</a>
                         <a href="{{ url('/scaffold') }}">Scaffold</a>
                     @endif
                 </div>
