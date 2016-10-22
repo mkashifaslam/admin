@@ -183,7 +183,11 @@ return [
         Amranidev\Ajaxis\AjaxisServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Vinkla\Pusher\PusherServiceProvider::class, 
-        Collective\Html\HtmlServiceProvider::class,        
+        Collective\Html\HtmlServiceProvider::class,     
+        PrettyRoutes\ServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,   
+        Recca0120\LaravelTracy\ServiceProvider::class,
     ],
 
     /*
@@ -234,6 +238,7 @@ return [
         'DotenvEditor' => Brotzka\DotenvEditor\DotenvEditorFacade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         
     ],
 

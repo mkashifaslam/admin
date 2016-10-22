@@ -12,6 +12,8 @@ use Input;
 use Validator;
 use Redirect;
 use Session;
+use Response;
+use Debugbar;
 
 /**
  * Class VideoController.
@@ -56,30 +58,56 @@ class VideoController extends Controller
 
     public function uploadVideo(Request $request) {
         // getting all of the post data
-        $file = array('video' => $request->file('video'));
+        Debugbar::error('====request===', $request->file);
+        $file = $request->file;
         // setting up rules
-        $rules = array('video' => 'required',); //mimes:jpeg,bmp,png and for max size max:10000
-        // doing the validation, passing post data, rules and the messages
-        $validator = Validator::make($file, $rules);
-        if ($validator->fails()) {
+        // $rules = array('video' => 'required',); //mimes:jpeg,bmp,png and for max size max:10000
+        // // doing the validation, passing post data, rules and the messages
+        // $validator = Validator::make($file, $rules);
+         if (empty($file)) {
             // send back to the page with the input data and errors
-            return Redirect::to('video/upload')->withInput()->withErrors($validator);
+            //return Redirect::to('video/upload')->withInput()->withErrors($validator);
+            //Debugbar::error('====validator===', $validator->errors());
+            Response::json('error', 400);
         }
         else {
             // checking file is valid.
-            if ( $request->file('video')->isValid()) {
+            if ( !empty($file)) {
             $destinationPath = 'uploads'; // upload path
-            $extension = $request->file('video')->getClientOriginalExtension(); // getting image extension
+            $extension = $file->getClientOriginalExtension(); // getting image extension
             $fileName = rand(11111,99999).'.'.$extension; // renameing image
-            $request->file('video')->move($destinationPath, $fileName); // uploading file to given path
+            $file->move($destinationPath, $fileName); // uploading file to given path
+            
+            $video = new Video;
+            $video->video_id = 1;
+            $video->video_title = $fileName;
+            $video->video_description = $fileName;
+            $video->video_storage_path = $fileName;
+            $video->video_category_id = 1;
+            $video->video_type_id = 2;
+            $video->video_total_views = 0;
+            $video->video_total_comments = 0;
+            $video->video_total_likes = 0;
+            $video->video_total_share_facebook = 0;
+            $video->video_upload_user_id = 1;
+            $video->save();
+
             // sending back with message
             Session::flash('success', 'Upload successfully'); 
-            return Redirect::to('video');
+            
+            Response::json('success', 200);
+            
+            //return Redirect::to('video');
             }
             else {
             // sending back with error message.
             Session::flash('error', 'uploaded file is not valid');
-            return Redirect::to('video/upload');
+
+
+            //return Redirect::to('video/upload');
+
+            Response::json('error', 400);
+
             }
         }
     }

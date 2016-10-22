@@ -11,7 +11,7 @@
 			<h2>{!! Session::get('success') !!}</h2>
 			</div>
 			@endif
-			<a href="{{url('video/upload')}}" class = "btn btn-success"><i class="fa fa-upload fa-md" aria-hidden="true"></i> Upload New Video</a>
+			<a href="{{url('video/upload/new')}}" class = "btn btn-success"><i class="fa fa-upload fa-md" aria-hidden="true"></i> Upload New Video</a>
 			<table class="table table-striped">
 				<head>
 					<th>Video Title</th>
@@ -25,8 +25,8 @@
 					 @foreach($videos as $Video)
 					<tr>
 						<td>{{$Video->video_title}}</td>
-                        <td>{{$Video->video_category}}</td>
-                        <td>{{$Video->video_type}}</td>
+                        <td>{{$Video->video_category_id}}</td>
+                        <td>{{$Video->video_type_id}}</td>
                         <td>{{$Video->video_total_views}}</td>
                         <td>{{$Video->created_at}}</td>
 						<td>
