@@ -10,6 +10,7 @@ use App\Video_category;
 use App\Video_format;
 use Amranidev\Ajaxis\Ajaxis;
 use URL;
+use Auth;
 use Input;
 use Validator;
 use Redirect;
@@ -60,7 +61,7 @@ class VideoController extends Controller
 
     public function uploadVideo(Request $request) {
         // getting all of the post data
-        Debugbar::error('====request===', $request->file);
+        //Debugbar::error('====request===', $request->file);
         $file = $request->file;
         // setting up rules
         // $rules = array('video' => 'required',); //mimes:jpeg,bmp,png and for max size max:10000
@@ -86,12 +87,8 @@ class VideoController extends Controller
             $video->video_description = $fileName;
             $video->video_storage_path = $fileName;
             $video->video_category_id = 1;
-            $video->video_type_id = 2;
-            $video->video_total_views = 0;
-            $video->video_total_comments = 0;
-            $video->video_total_likes = 0;
-            $video->video_total_share_facebook = 0;
-            $video->video_upload_user_id = 1;
+            $video->video_type_id = 1;
+            $video->video_upload_user_id = Auth::user()->id;
             $video->save();
 
             // sending back with message
