@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use App\Video;
 use App\Video_category;
 use App\Video_format;
 use Amranidev\Ajaxis\Ajaxis;
 use URL;
 use Auth;
+use File;
 use Input;
 use Validator;
 use Redirect;
@@ -61,31 +63,26 @@ class VideoController extends Controller
 
     public function uploadVideo(Request $request) {
         // getting all of the post data
-        //Debugbar::error('====request===', $request->file);
         $file = $request->file;
         // setting up rules
-        // $rules = array('video' => 'required',); //mimes:jpeg,bmp,png and for max size max:10000
-        // // doing the validation, passing post data, rules and the messages
-        // $validator = Validator::make($file, $rules);
          if (empty($file)) {
-            // send back to the page with the input data and errors
-            //return Redirect::to('video/upload')->withInput()->withErrors($validator);
-            //Debugbar::error('====validator===', $validator->errors());
             Response::json('error', 400);
         }
         else {
             // checking file is valid.
             if ( !empty($file)) {
             $destinationPath = 'uploads'; // upload path
-            $extension = $file->getClientOriginalExtension(); // getting image extension
-            $fileName = rand(11111,99999).'.'.$extension; // renameing image
-            $file->move($destinationPath, $fileName); // uploading file to given path
+            $fileName = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension(); // getting vidoe extension
+            $fileOriginalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $uploadedFileName = Str::quickRandom().'.'.$extension; // renameing video
+            $file->move($destinationPath, $uploadedFileName); // uploading file to given path
             
             $video = new Video;
             $video->video_id = 1;
-            $video->video_title = $fileName;
+            $video->video_title = $fileOriginalName;
             $video->video_description = $fileName;
-            $video->video_storage_path = $fileName;
+            $video->video_storage_path = $uploadedFileName;
             $video->video_category_id = 1;
             $video->video_type_id = 1;
             $video->video_upload_user_id = Auth::user()->id;
@@ -255,6 +252,8 @@ class VideoController extends Controller
     public function destroy($id)
     {
      	$video = Video::findOrfail($id);
+        $file_path = public_path("uploads\/".$video->video_storage_path);
+        File::delete($file_path);
      	$video->delete();
         return redirect('video');
     }

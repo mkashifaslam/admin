@@ -1,6 +1,7 @@
 @extends('scaffold-interface.layouts.app')
 <link href="{{ asset('dropzone/dropzone.css') }}" rel="stylesheet">
 <script src="{{ asset('dropzone/dropzone.js') }}"></script>
+<script src="{{ asset('js/dropzone-config.js') }}"></script>
 @section('content')
 <section class="content">
 	<div class="box box-primary">
@@ -12,7 +13,7 @@
             <div class="text-content">
                 <div class="span7 offset1">
                     <div class="secure">Upload form</div>
-                    {!! Form::open(array('url'=>'video/uploadVideo','method'=>'POST', 'files'=>true, 'class' => 'dropzone')) !!}
+                    {!! Form::open(array('url'=>'video/uploadVideo','method'=>'POST', 'files'=>true, 'class' => 'dropzone', 'id' => 'form_video')) !!}
                     <div class="control-group">
                     <div class="controls">
                     <div class="fallback">
