@@ -128,6 +128,9 @@
 						<li class="treeview"><a href="{{url('/users')}}"><i class="fa fa-users"></i> <span>Users</span></a></li>
 						<li class="treeview"><a href="{{url('/roles')}}"><i class="fa fa-user-plus"></i> <span>Role</span></a></li>
 						<li class="treeview"><a href="{{url('/permissions')}}"><i class="fa fa-key"></i> <span>Permissions</span></a></li>
+						<li class="treeview"><a href="{{url('/video')}}"><i class="fa fa-video-camera"></i> <span>Videos</span></a></li>
+						<li class="treeview"><a href="{{url('/video_category')}}"><i class="fa fa-tags"></i> <span>Videos Categories</span></a></li>
+						<li class="treeview"><a href="{{url('/video_format')}}"><i class="fa fa-film"></i> <span>Videos Formates</span></a></li>
 					</ul>
 				</section>
 				<!-- /.sidebar -->

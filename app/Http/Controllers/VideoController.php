@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Video;
+use App\Video_category;
+use App\Video_format;
 use Amranidev\Ajaxis\Ajaxis;
 use URL;
 use Input;
@@ -199,7 +201,9 @@ class VideoController extends Controller
 
         
         $video = Video::findOrfail($id);
-        return view('video.edit',compact('video'  ));
+        $categories = Video_category::all();
+        $formates = Video_format::all();
+        return view('video.edit',compact('video', 'categories', 'formates'));
     }
 
     /**
@@ -219,18 +223,9 @@ class VideoController extends Controller
         
         $video->video_description = $request->video_description;
         
-        $video->video_category = $request->video_category;
+        $video->video_category_id = $request->video_category_id;
         
-        $video->video_type = $request->video_type;
-        
-        $video->video_upload_date = $request->video_upload_date;
-        
-        $video->video_total_views = $request->video_total_views;
-        
-        $video->video_upload_user_id = $request->video_upload_user_id;
-        
-        $video->video_delete_date = $request->video_delete_date;
-        
+        $video->video_type_id = $request->video_type_id;
         
         $video->save();
 
@@ -264,6 +259,6 @@ class VideoController extends Controller
     {
      	$video = Video::findOrfail($id);
      	$video->delete();
-        return URL::to('video');
+        return redirect('video');
     }
 }

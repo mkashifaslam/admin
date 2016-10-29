@@ -22,6 +22,7 @@
                     </div>
                     {!! Form::close() !!}
                 </div>
+                <a href="{{url('/video/')}}" class="btn btn-primary">Back</a>
             </div>
             </div>
 		</div>

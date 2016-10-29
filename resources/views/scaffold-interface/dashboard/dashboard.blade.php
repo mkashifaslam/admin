@@ -53,15 +53,41 @@
 		</div>
 		<div class="col-lg-3 col-xs-6">
 			<!-- small box -->
-			<div class="small-box bg-aqua">
+			<div class="small-box bg-green">	
 				<div class="inner">
 					<h3>{{$videos}}</h3>
 					<p>Videos</p>
 				</div>
 				<div class="icon">
-					<i class="ion ion-person-stalker"></i>
+					<i class="ion ion-videocamera"></i>
 				</div>
 				<a href="{{url('video')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-blue">
+				<div class="inner">
+					<h3>{{$categories}}</h3>
+					<p>Video Categories</p>
+				</div>
+				<div class="icon">
+					<i class="fa fa-tags"></i>
+				</div>
+				<a href="{{url('video_category')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-aqua">
+				<div class="inner">
+					<h3>{{$formates}}</h3>
+					<p>Video Formates</p>
+				</div>
+				<div class="icon">
+					<i class="ion ion-ios-film"></i>
+				</div>
+				<a href="{{url('video_format')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
 	</div>

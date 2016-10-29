@@ -16,7 +16,7 @@
 				<head>
 					<th>Video Title</th>
                     <th>Video Category</th>
-                    <th>Video Type</th>
+                    <th>Video Format</th>
                     <th>Video Total Views</th>
 					<th>Video Upload Date</th>
                     <th>Actions</th>
@@ -25,13 +25,13 @@
 					 @foreach($videos as $Video)
 					<tr>
 						<td>{{$Video->video_title}}</td>
-                        <td>{{$Video->video_category_id}}</td>
-                        <td>{{$Video->video_type_id}}</td>
+                        <td>{{$Video->category->category_name}}</td>
+                        <td>{{$Video->format->video_format_name}}</td>
                         <td>{{$Video->video_total_views}}</td>
                         <td>{{$Video->created_at}}</td>
 						<td>
-							<a href="{{url('/video/edit')}}/{{$Video->id}}" class = "btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-							<a href="{{url('/video/delete')}}/{{$Video->id}}" class = "btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+							<a href="{{url('/video/')}}/{{$Video->id}}/edit" class = "btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+							<a href="{{url('/video/')}}/{{$Video->id}}/delete" class = "btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 						</td>
 					</tr>
 					@endforeach

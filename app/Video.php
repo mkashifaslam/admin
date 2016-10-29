@@ -21,5 +21,15 @@ class Video extends Model
 	
     protected $table = 'videos';
 
+	public function category()
+    {
+        return $this->hasOne('App\Video_category', 'category_id', 'video_category_id');
+    }
+
+	public function format()
+    {
+        return $this->hasOne('App\Video_format', 'video_format_id', 'video_type_id');
+    }
+
 	
 }
