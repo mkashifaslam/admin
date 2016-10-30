@@ -1,17 +1,21 @@
 @extends('layouts.app')
-
+<link href="http://vjs.zencdn.net/5.0.2/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/ie8/1.1.0/videojs-ie8.min.js"></script>
+<script src="http://vjs.zencdn.net/5.0.2/video.js"></script>
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
+    @foreach($videos as $video)
+    <div class="col-md-4">
+        <video id="video_{{ $video->video_id }}" class="video-js vjs-default-skin" controls preload="none" poster="{{ config('app.video_thumbnail_images_path').'/'.$video->video_thumbnail_path }}" data-;4setup="{}">
+            <source src="{{ config('app.video_storage_path').'/'.$video->video_storage_path }}" type="video/mp4">
+            <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+        </video>
+    </div>
+    @endforeach
+    <div class="col-md-12">
+        {{ $videos->links() }}
+    </div>
     </div>
 </div>
 @endsection

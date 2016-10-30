@@ -35,6 +35,11 @@
 						</td>
 					</tr>
 					@endforeach
+					<tr>
+					<td colspan="6">
+						{{ $videos->links() }}
+					</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

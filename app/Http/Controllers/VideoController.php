@@ -19,6 +19,7 @@ use Redirect;
 use Session;
 use Response;
 use Debugbar;
+use Thumbnail;
 
 /**
  * Class VideoController.
@@ -35,7 +36,10 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::all();
+        $pageSize = env('VIDEO_LIST_PAGE_SIZE');
+        
+        $videos = Video::paginate($pageSize);
+
         return view('video.index',compact('videos'));
     }
 
@@ -71,39 +75,56 @@ class VideoController extends Controller
         else {
             // checking file is valid.
             if ( !empty($file)) {
-            $destinationPath = 'uploads'; // upload path
-            $fileName = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension(); // getting vidoe extension
-            $fileOriginalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $uploadedFileName = Str::quickRandom().'.'.$extension; // renameing video
-            $file->move($destinationPath, $uploadedFileName); // uploading file to given path
-            
-            $video = new Video;
-            $video->video_id = 1;
-            $video->video_title = $fileOriginalName;
-            $video->video_description = $fileName;
-            $video->video_storage_path = $uploadedFileName;
-            $video->video_category_id = 1;
-            $video->video_type_id = 1;
-            $video->video_upload_user_id = Auth::user()->id;
-            $video->save();
+                $destinationPath = config('app.video_storage');
+                $fileName = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension(); // getting vidoe extension
+                $fileOriginalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $strRandom = Str::quickRandom();
+                $uploadedFileName = $strRandom.'.'.$extension; // renameing video
+                $upload_status    = $file->move($destinationPath, $uploadedFileName); // uploading file to given path
+                
+                if($upload_status)
+                {
+                    $thumbnail_path   = config('app.video_thumbnail_storage');
+                    $video_path       = $destinationPath.'/'.$uploadedFileName;
+                    $thumbnail_image  = $strRandom.".jpg";
+                    // set the thumbnail image "palyback" video button
+                    $water_mark           = config('app.video_thumbnail_storage').'/p.png';
+                    $thumbnail_img_width  = env('THUMBNAIL_IMAGE_WIDTH');
+                    $thumbnail_img_heigth = env('THUMBNAIL_IMAGE_HEIGHT');
+                    // get video length and process it
+                    // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
+                    $time_to_image    = 5;
 
-            // sending back with message
-            Session::flash('success', 'Upload successfully'); 
-            
-            Response::json('success', 200);
-            
-            //return Redirect::to('video');
-            }
-            else {
-            // sending back with error message.
-            Session::flash('error', 'uploaded file is not valid');
+                    $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,160,128,$time_to_image,$water_mark,true,$thumbnail_img_width,$thumbnail_img_heigth);
+                          
+                    if($thumbnail_status)
+                    {
+                        $video = new Video;
+                        $video->video_id = 1;
+                        $video->video_title = $fileOriginalName;
+                        $video->video_description = $fileName;
+                        $video->video_storage_path = $uploadedFileName;
+                        $video->video_thumbnail_path = $thumbnail_image;
+                        $video->video_category_id = 1;
+                        $video->video_type_id = 1;
+                        $video->video_upload_user_id = Auth::user()->id;
+                        $video->save();
 
-
-            //return Redirect::to('video/upload');
-
-            Response::json('error', 400);
-
+                        // sending back with message
+                        Session::flash('success', 'Upload successfully'); 
+                        
+                        Response::json('success', 200);
+                    }
+                    else
+                    {
+                        Response::json('error', 400);
+                    }
+                }
+            } else {
+                // sending back with error message.
+                Session::flash('error', 'uploaded file is not valid');
+                Response::json('error', 400);
             }
         }
     }
@@ -252,9 +273,17 @@ class VideoController extends Controller
     public function destroy($id)
     {
      	$video = Video::findOrfail($id);
-        $file_path = public_path("uploads\/".$video->video_storage_path);
-        File::delete($file_path);
-     	$video->delete();
+        $this->removeVideo($id);
         return redirect('video');
+    }
+
+    private function removeVideo($id) 
+    {
+        $video = Video::findOrfail($id);
+        $file_path = config('app.video_storage').'/'.$video->video_storage_path;
+        File::delete($file_path);
+        $thumbnail_file_path = config('app.video_thumbnail_storage').'/'.$video->video_thumbnail_path;
+        File::delete($thumbnail_file_path);
+     	$video->delete();
     }
 }

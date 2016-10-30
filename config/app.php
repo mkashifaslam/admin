@@ -53,6 +53,14 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'video_thumbnail_storage' => 'images',
+
+    'video_thumbnail_images_path' => asset('images'),
+
+    'video_storage' => 'uploads',
+    
+    'video_storage_path' => asset('uploads'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -188,6 +196,7 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,   
         Recca0120\LaravelTracy\ServiceProvider::class,
+        Lakshmajim\Thumbnail\ThumbnailServiceProvider::class,
     ],
 
     /*
@@ -239,6 +248,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Thumbnail' => Lakshmajim\Thumbnail\Facade\Thumbnail::class,
         
     ],
 

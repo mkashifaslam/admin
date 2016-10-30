@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Video;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $pageSize = env('VIDEO_DISPLAY_PAGE_SIZE');
+        
+        $videos = Video::paginate($pageSize);
+
+        return view('home', compact('videos'));
     }
 }
