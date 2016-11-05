@@ -55,11 +55,11 @@ return [
 
     'video_thumbnail_storage' => 'images',
 
-    'video_thumbnail_images_path' => asset('images'),
+    'video_thumbnail_images_path' => env('APP_URL').'images',
 
     'video_storage' => 'uploads',
     
-    'video_storage_path' => asset('uploads'),
+    'video_storage_path' => env('APP_URL').'uploads',
 
     /*
     |--------------------------------------------------------------------------
