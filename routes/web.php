@@ -17,11 +17,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
+Route::paginate('/home', 'HomeController@index');
 
 //video Resources
 /********************* video ***********************************************/
-Route::resource('video','\App\Http\Controllers\VideoController');
+Route::resource('video','\App\Http\Controllers\VideoController', ['except' => ['index']]);
+Route::paginate('/video', 'VideoController@index');
 Route::get('video/upload/new','\App\Http\Controllers\VideoController@upload');
 Route::post('video/uploadVideo','\App\Http\Controllers\VideoController@uploadVideo');
 Route::post('video/{id}/update','\App\Http\Controllers\VideoController@update');

@@ -37,7 +37,7 @@
 					@endforeach
 					<tr>
 					<td colspan="6">
-						{{ $videos->links() }}
+						@include('pagination.default', ['paginator' => $videos])
 					</td>
 					</tr>
 				</tbody>
