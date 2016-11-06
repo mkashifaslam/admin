@@ -197,6 +197,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,   
         Recca0120\LaravelTracy\ServiceProvider::class,
         Lakshmajim\Thumbnail\ThumbnailServiceProvider::class,
+        Spatie\PaginateRoute\PaginateRouteServiceProvider::class,
     ],
 
     /*
@@ -249,6 +250,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Thumbnail' => Lakshmajim\Thumbnail\Facade\Thumbnail::class,
+        'PaginateRoute' => Spatie\PaginateRoute\PaginateRouteFacade::class,
         
     ],
 

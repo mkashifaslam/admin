@@ -14,7 +14,7 @@
     </div>
     @endforeach
     <div class="col-md-12">
-        {{ $videos->links() }}
+        @include('pagination.default', ['paginator' => $videos])
     </div>
     </div>
 </div>
