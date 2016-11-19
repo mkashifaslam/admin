@@ -14,5 +14,6 @@ require('laravel-elixir-vue-2');
  */
 
 elixir(mix => {
-    mix.sass('app.scss');
+    mix.sass('app.scss').styles(['video-js.css','custom-videojs-skin.css']);
+     mix.copy('resources/assets/css/admin.css', 'public/css/admin.css');
 });

@@ -25,7 +25,11 @@
 					 @foreach($videos as $Video)
 					<tr>
 						<td>{{$Video->video_title}}</td>
-                        <td>{{$Video->category->category_name}}</td>
+                        @if ($Video->video_category_id > 0) 
+                        	<td>{{$Video->category->category_name}}</td>
+                        @else
+                        	<td>N/A</td>
+                        @endif
                         <td>{{$Video->format->video_format_name}}</td>
                         <td>{{$Video->video_total_views}}</td>
                         <td>{{$Video->created_at}}</td>

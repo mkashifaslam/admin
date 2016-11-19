@@ -24,7 +24,10 @@ class Video_formatController extends Controller
      */
     public function index()
     {
-        $video_formats = Video_format::all();
+        $pageSize = env('VIDEO_LIST_PAGE_SIZE');
+        
+        $video_formats = Video_format::paginate($pageSize);
+
         return view('video_format.index',compact('video_formats'));
     }
 
@@ -35,8 +38,15 @@ class Video_formatController extends Controller
      */
     public function create()
     {
+        $video_format = Video_format::select("video_format_id")->orderBy("id","desc")->take(1)->get();
+
+        $video_format_id = 0;
         
-        return view('video_format.create');
+        if(!empty($video_format)) {
+            $video_format_id = $video_format[0]['video_format_id'] + 1;
+        }
+        
+        return view('video_format.create', compact('video_format_id'));
     }
 
     /**

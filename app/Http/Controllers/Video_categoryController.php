@@ -24,7 +24,10 @@ class Video_categoryController extends Controller
      */
     public function index()
     {
-        $video_categories = Video_category::all();
+        $pageSize = env('VIDEO_LIST_PAGE_SIZE');
+
+        $video_categories = Video_category::paginate($pageSize);
+        
         return view('video_category.index',compact('video_categories'));
     }
 
@@ -35,8 +38,16 @@ class Video_categoryController extends Controller
      */
     public function create()
     {
+
+        $video_category = Video_category::select("category_id")->orderBy("id","desc")->take(1)->get();
+
+        $category_id = 0;
         
-        return view('video_category.create');
+        if(!empty($video_category)) {
+            $category_id = $video_category[0]['category_id'] + 1;
+        }
+        
+        return view('video_category.create', compact('category_id'));
     }
 
     /**

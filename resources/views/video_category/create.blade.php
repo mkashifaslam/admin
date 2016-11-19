@@ -10,7 +10,7 @@
 				<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
 				<div class="form-group">
                     <label for="category_id">ID</label>
-                    <input id="category_id" name = "category_id" type="text" class="form-control">
+                    <input id="category_id" name = "category_id" readonly="readonly" value="{{ $category_id }}" type="text" class="form-control">
                 </div>
 				<div class="form-group">
                     <label for="category_name">Name</label>

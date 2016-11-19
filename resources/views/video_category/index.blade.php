@@ -31,6 +31,11 @@
 						</td>
 					</tr>
 					@endforeach
+					<tr>
+					<td colspan="6">
+						@include('pagination.default', ['paginator' => $video_categories])
+					</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

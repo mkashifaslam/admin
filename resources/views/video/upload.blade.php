@@ -1,8 +1,9 @@
 @extends('scaffold-interface.layouts.app')
+@section('content')
 <link href="{{ asset('dropzone/dropzone.css') }}" rel="stylesheet">
 <script src="{{ asset('dropzone/dropzone.js') }}"></script>
+<script> var formates = "{{ $video_format_list }}"</script>
 <script src="{{ asset('js/dropzone-config.js') }}"></script>
-@section('content')
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header">

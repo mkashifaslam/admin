@@ -31,5 +31,18 @@ class Video extends Model
         return $this->hasOne('App\Video_format', 'video_format_id', 'video_type_id');
     }
 
+    public function getLastVideoId()
+    {
+    	$video = $this::select("video_id")->orderBy("id","desc")->take(1)->get();
+
+        $video_id = 0;
+        
+        if(!empty($video)) {
+            $video_id = $video[0]['video_id'] + 1;
+        }
+
+        return $video_id;
+    }
+
 	
 }

@@ -33,7 +33,8 @@ Route::get('video/{id}/deleteMsg','\App\Http\Controllers\VideoController@DeleteM
 
 //video_category Resources
 /********************* video_category ***********************************************/
-Route::resource('video_category','\App\Http\Controllers\Video_categoryController');
+Route::resource('video_category','\App\Http\Controllers\Video_categoryController', ['except' => ['index']]);
+Route::paginate('/video_category', 'Video_categoryController@index');
 Route::post('video_category/{id}/update','\App\Http\Controllers\Video_categoryController@update');
 Route::get('video_category/{id}/delete','\App\Http\Controllers\Video_categoryController@destroy');
 Route::get('video_category/{id}/deleteMsg','\App\Http\Controllers\Video_categoryController@DeleteMsg');
@@ -42,7 +43,8 @@ Route::get('video_category/{id}/deleteMsg','\App\Http\Controllers\Video_category
 
 //video_format Resources
 /********************* video_format ***********************************************/
-Route::resource('video_format','\App\Http\Controllers\Video_formatController');
+Route::resource('video_format','\App\Http\Controllers\Video_formatController', ['except' => ['index']]);
+Route::paginate('/video_format', 'Video_formatController@index');
 Route::post('video_format/{id}/update','\App\Http\Controllers\Video_formatController@update');
 Route::get('video_format/{id}/delete','\App\Http\Controllers\Video_formatController@destroy');
 Route::get('video_format/{id}/deleteMsg','\App\Http\Controllers\Video_formatController@DeleteMsg');

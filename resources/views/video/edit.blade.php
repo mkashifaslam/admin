@@ -10,7 +10,7 @@
 				<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
 				<div class="form-group">
                     <label for="video_id">ID</label>
-                    <input id="video_id" name = "video_id" type="text" class="form-control" value="{{$video->video_id}}">
+                    <input id="video_id" name = "video_id" type="text" readonly="readonly" class="form-control" value="{{$video->video_id}}">
                 </div>
                 <div class="form-group">
                     <label for="video_title">Title</label>
@@ -26,7 +26,7 @@
                     <label for="video_category">Category</label>
                     <select id="video_category_id" name = "video_category_id" class="form-control">
                         @foreach ($categories as $category)
-                            <option value="{{$category->id}}">{{$category->category_name}}</p>
+                            <option value="{{$category->category_id}}">{{$category->category_name}}</p>
                         @endforeach
                     </select>
                 </div>

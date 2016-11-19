@@ -10,7 +10,7 @@
 				<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
 				<div class="form-group">
                     <label for="video_format_id">ID</label>
-                    <input id="video_format_id" name = "video_format_id" type="text" class="form-control" value="{{$video_format->video_format_id}}">
+                    <input id="video_format_id" name = "video_format_id" readonly="readonly" type="text" readonly="readonly" class="form-control" value="{{$video_format->video_format_id}}">
                 </div>
                 <div class="form-group">
                     <label for="video_format_name">Name</label>

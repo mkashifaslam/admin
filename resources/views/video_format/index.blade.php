@@ -26,7 +26,7 @@
 					<tr>
 						<td>{{$Video_format->video_format_id}}</td>
                         <td>{{$Video_format->video_format_name}}</td>
-                        <td>{{$Video_format->video_format_decscription}}</td>
+                        <td class="description-col">{{$Video_format->video_format_decscription}}</td>
                         <td>{{$Video_format->video_format_coding}}</td>
                         <td>{{$Video_format->video_format_extension}}</td>
 						<td>
@@ -35,6 +35,11 @@
 						</td>
 					</tr>
 					@endforeach
+					<tr>
+					<td colspan="6">
+						@include('pagination.default', ['paginator' => $video_formats])
+					</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

@@ -61,8 +61,13 @@ class VideoController extends Controller
      */
     public function upload()
     {
-        
-        return view('video.upload');
+        $video_formats = new Video_format;
+
+        $video_format_list = $video_formats->getAllExt();
+
+        Debugbar::info('video formates : ', $video_format_list);
+
+        return view('video.upload', compact('video_format_list'));
     }
 
     public function uploadVideo(Request $request) {
@@ -77,7 +82,7 @@ class VideoController extends Controller
             if ( !empty($file)) {
                 $destinationPath = config('app.video_storage');
                 $fileName = $file->getClientOriginalName();
-                $extension = $file->getClientOriginalExtension(); // getting vidoe extension
+                $extension = $file->getClientOriginalExtension(); // getting video extension
                 $fileOriginalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $strRandom = Str::quickRandom();
                 $uploadedFileName = $strRandom.'.'.$extension; // renameing video
@@ -89,25 +94,35 @@ class VideoController extends Controller
                     $video_path       = $destinationPath.'/'.$uploadedFileName;
                     $thumbnail_image  = $strRandom.".jpg";
                     // set the thumbnail image "palyback" video button
-                    $water_mark           = config('app.video_thumbnail_storage').'/p.png';
+                    //$water_mark           = config('app.video_thumbnail_storage').'/p.png';
+                    $water_mark           = '';
                     $thumbnail_img_width  = env('THUMBNAIL_IMAGE_WIDTH');
                     $thumbnail_img_heigth = env('THUMBNAIL_IMAGE_HEIGHT');
                     // get video length and process it
                     // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
-                    $time_to_image    = 5;
+                    $time_to_image    = 15;
 
-                    $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,160,128,$time_to_image,$water_mark,true,$thumbnail_img_width,$thumbnail_img_heigth);
+                    $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,160,128,$time_to_image,$water_mark,false,$thumbnail_img_width,$thumbnail_img_heigth);
                           
                     if($thumbnail_status)
                     {
+                        $video_format = Video_format::where('video_format_extension' , $extension)->select('video_format_id')->get();
+
+                        $video_format_id = 0; 
+                        $video_category_id = 0;
+                        
+                        if(!empty($video_format)) {
+                            $video_format_id = $video_format[0]["video_format_id"]; 
+                        }
+
                         $video = new Video;
-                        $video->video_id = 1;
+                        $video->video_id = $video->getLastVideoId();
                         $video->video_title = $fileOriginalName;
                         $video->video_description = $fileName;
                         $video->video_storage_path = $uploadedFileName;
                         $video->video_thumbnail_path = $thumbnail_image;
-                        $video->video_category_id = 1;
-                        $video->video_type_id = 1;
+                        $video->video_category_id = $video_category_id;
+                        $video->video_type_id = $video_format_id;
                         $video->video_upload_user_id = Auth::user()->id;
                         $video->save();
 
