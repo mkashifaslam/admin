@@ -19,6 +19,7 @@
                     <th>Video Format Decscription</th>
                     <th>Video Format Coding</th>                    
                     <th>Video Format Extension</th>
+                    <th>Video Format Mime-Type</th>
 					<th>Actions</th>
 				</head>
 				<tbody>
@@ -29,6 +30,7 @@
                         <td class="description-col">{{$Video_format->video_format_decscription}}</td>
                         <td>{{$Video_format->video_format_coding}}</td>
                         <td>{{$Video_format->video_format_extension}}</td>
+                        <td>{{$Video_format->video_format_mime_type}}</td>
 						<td>
 							<a href="/video_format/{{$Video_format->id}}/edit" class = "btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 							<a href="/video_format/{{$Video_format->id}}/delete" class = "btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></a>

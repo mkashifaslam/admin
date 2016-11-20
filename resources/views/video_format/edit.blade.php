@@ -31,6 +31,12 @@
                     <label for="video_format_extension">Extension</label>
                     <input id="video_format_extension" name = "video_format_extension" type="text" class="form-control" value="{{$video_format->video_format_extension}}">
                 </div>
+
+                <div class="form-group">
+                    <label for="video_format_mime_type">Mime Type</label>
+                    <input id="video_format_mime_type" name = "video_format_mime_type" type="text" class="form-control" value="{{$video_format->video_format_mime_type}}">
+                </div>
+
 				<div class="box-footer">
 					<button class = 'btn btn-primary' type = "submit">Update</button>
                     <a href="{{url('/video_format/')}}" class="btn btn-primary">Cancel</a>

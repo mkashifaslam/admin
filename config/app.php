@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'PakTube',
 
     /*
     |--------------------------------------------------------------------------
@@ -198,6 +198,7 @@ return [
         Recca0120\LaravelTracy\ServiceProvider::class,
         Lakshmajim\Thumbnail\ThumbnailServiceProvider::class,
         Spatie\PaginateRoute\PaginateRouteServiceProvider::class,
+        LinkThrow\Ffmpeg\Provider\FfmpegServiceProvider::class,
     ],
 
     /*
@@ -251,6 +252,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Thumbnail' => Lakshmajim\Thumbnail\Facade\Thumbnail::class,
         'PaginateRoute' => Spatie\PaginateRoute\PaginateRouteFacade::class,
+        'FFMPEG'        => LinkThrow\Ffmpeg\Facade\FfmpegFacade::class,
         
     ],
 

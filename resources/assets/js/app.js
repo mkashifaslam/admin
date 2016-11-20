@@ -13,8 +13,23 @@ require('./bootstrap');
  * the application, or feel free to tweak this setup for your needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+/*Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#delete_video'
+});*/
+
+// register modal component
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
+// start app
+new Vue({
+  el: '#app',
+  data: {
+    showModal: false
+  }
 });
+
+// {{url('/video/')}}/{{$Video->id}}/delete

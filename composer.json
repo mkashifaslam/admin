@@ -14,7 +14,8 @@
         "recca0120/laravel-tracy": "^1.7",
         "doctrine/dbal": "^2.5",
         "lakshmajim/thumbnail": "^1.3",
-        "spatie/laravel-paginateroute": "^2.2"
+        "spatie/laravel-paginateroute": "^2.2",
+        "linkthrow/ffmpeg": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -23,7 +24,8 @@
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
         "brotzka/laravel-dotenv-editor": "2.*",
-        "Amranidev/scaffold-interface": "v1.6.*"
+        "Amranidev/scaffold-interface": "v1.6.*",
+        "laracasts/generators": "^1.1"
     },
     "autoload": {
         "classmap": [

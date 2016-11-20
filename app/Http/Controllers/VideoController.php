@@ -20,6 +20,7 @@ use Session;
 use Response;
 use Debugbar;
 use Thumbnail;
+use FFMPEG;
 
 /**
  * Class VideoController.
@@ -82,10 +83,15 @@ class VideoController extends Controller
             if ( !empty($file)) {
                 $destinationPath = config('app.video_storage');
                 $fileName = $file->getClientOriginalName();
-                $extension = $file->getClientOriginalExtension(); // getting video extension
+                //$original_extension = $file->getClientOriginalExtension(); // getting video extension
+                $extension = 'mp4';
                 $fileOriginalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $strRandom = Str::quickRandom();
                 $uploadedFileName = $strRandom.'.'.$extension; // renameing video
+                FFMPEG::convert()->input($fileName)->bitrate(300, 'video')->output($destinationPath.'/'.$uploadedFileName)->go();
+
+                $converted_file_info = FFMPEG::getMediaInfo($uploadedFileName);
+
                 $upload_status    = $file->move($destinationPath, $uploadedFileName); // uploading file to given path
                 
                 if($upload_status)
@@ -103,17 +109,17 @@ class VideoController extends Controller
                     $time_to_image    = 15;
 
                     $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,160,128,$time_to_image,$water_mark,false,$thumbnail_img_width,$thumbnail_img_heigth);
-                          
+
                     if($thumbnail_status)
                     {
-                        $video_format = Video_format::where('video_format_extension' , $extension)->select('video_format_id')->get();
+                        //$video_format = Video_format::where('video_format_extension' , $extension)->select('video_format_id')->get();
 
-                        $video_format_id = 0; 
+                        $video_format_id = 4; 
                         $video_category_id = 0;
                         
-                        if(!empty($video_format)) {
+                        /*if(!empty($video_format)) {
                             $video_format_id = $video_format[0]["video_format_id"]; 
-                        }
+                        }*/
 
                         $video = new Video;
                         $video->video_id = $video->getLastVideoId();

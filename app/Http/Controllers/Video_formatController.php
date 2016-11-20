@@ -74,7 +74,7 @@ class Video_formatController extends Controller
         
         $video_format->video_format_extension = $request->video_format_extension;
 
-        
+        $video_format->video_format_mime_type = $request->video_format_mime_type;
         
         $video_format->save();
 
@@ -147,6 +147,8 @@ class Video_formatController extends Controller
         $video_format->video_format_coding = $request->video_format_coding;
         
         $video_format->video_format_extension = $request->video_format_extension;
+
+        $video_format->video_format_mime_type = $request->video_format_mime_type;        
         
         
         $video_format->save();

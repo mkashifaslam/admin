@@ -33,12 +33,17 @@ class Video extends Model
 
     public function getLastVideoId()
     {
-    	$video = $this::select("video_id")->orderBy("id","desc")->take(1)->get();
+        $video_id = 1;
 
-        $video_id = 0;
-        
-        if(!empty($video)) {
-            $video_id = $video[0]['video_id'] + 1;
+        $total_videos = $this::all()->count();
+
+        if($total_videos > 0) {
+
+            $video = $this::select("video_id")->orderBy("id","desc")->take(1)->get();
+
+            if(!empty($video)) {
+                $video_id += $video[0]['video_id'];
+            }
         }
 
         return $video_id;

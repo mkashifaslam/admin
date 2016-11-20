@@ -19,7 +19,7 @@
     "sass-loader": "^4.0.2",
     "video.js": "^5.11.9",
     "vue": "^2.0.1",
-    "vue-loader": "^9.7.0",
+    "vue-loader": "^9.9.5",
     "vue-resource": "^1.0.3",
     "webpack": "^1.13.3"
   }
