@@ -20,7 +20,8 @@ use Session;
 use Response;
 use Debugbar;
 use Thumbnail;
-use FFMPEG;
+//use FFMPEG;
+use FFMpeg;
 
 /**
  * Class VideoController.
@@ -83,38 +84,60 @@ class VideoController extends Controller
             if ( !empty($file)) {
                 $destinationPath = config('app.video_storage');
                 $fileName = $file->getClientOriginalName();
-                //$original_extension = $file->getClientOriginalExtension(); // getting video extension
+                //$extension = $file->getClientOriginalExtension(); // getting video extension
                 $extension = 'mp4';
                 $fileOriginalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $strRandom = Str::quickRandom();
                 $uploadedFileName = $strRandom.'.'.$extension; // renameing video
-                FFMPEG::convert()->input($fileName)->bitrate(300, 'video')->output($destinationPath.'/'.$uploadedFileName)->go();
 
-                $converted_file_info = FFMPEG::getMediaInfo($uploadedFileName);
+                //FFMPEG::convert()->input($fileName)->bitrate(300, 'video')->output($destinationPath.'/'.$uploadedFileName)->go();
+
+                //$converted_file_info = FFMPEG::getMediaInfo($uploadedFileName);
 
                 $upload_status    = $file->move($destinationPath, $uploadedFileName); // uploading file to given path
                 
                 if($upload_status)
                 {
+                    // convert the video file to standard video format
+                     /*FFMpeg::fromDisk('videos')
+                    ->open($uploadedFileName)
+                    ->export()
+                    ->toDisk('converted-videos')
+                    ->inFormat(new \FFMpeg\Format\Video\WebM)
+                    ->save($uploadedFileName);*/
+
                     $thumbnail_path   = config('app.video_thumbnail_storage');
                     $video_path       = $destinationPath.'/'.$uploadedFileName;
                     $thumbnail_image  = $strRandom.".jpg";
-                    // set the thumbnail image "palyback" video button
-                    //$water_mark           = config('app.video_thumbnail_storage').'/p.png';
-                    $water_mark           = '';
-                    $thumbnail_img_width  = env('THUMBNAIL_IMAGE_WIDTH');
-                    $thumbnail_img_heigth = env('THUMBNAIL_IMAGE_HEIGHT');
-                    // get video length and process it
-                    // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
-                    $time_to_image    = 15;
+                    
+                     // get the single frame work poster image of video
+                    $thumbnail_status = FFMpeg::fromDisk('videos')
+                        ->open($uploadedFileName)
+                        /* ->addFilter(function ($filters) {
+                                $thumbnail_img_width  = env('THUMBNAIL_IMAGE_WIDTH');
+                                $thumbnail_img_heigth = env('THUMBNAIL_IMAGE_HEIGHT');
+                                $filters->resize(new \FFMpeg\Coordinate\Dimension($thumbnail_img_width, $thumbnail_img_heigth));
+                            })*/
+                        ->getFrameFromSeconds(10)
+                        ->export()
+                        ->toDisk('thumnails')
+                        ->save($thumbnail_image);
 
-                    $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,160,128,$time_to_image,$water_mark,false,$thumbnail_img_width,$thumbnail_img_heigth);
+                    // // set the thumbnail image "palyback" video button
+                    // //$water_mark           = config('app.video_thumbnail_storage').'/p.png';
+                    // $water_mark           = '';
+                   
+                    // // get video length and process it
+                    // // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
+                    // $time_to_image    = 15;
 
-                    if($thumbnail_status)
+                    // $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,160,128,$time_to_image,$water_mark,false,$thumbnail_img_width,$thumbnail_img_heigth);
+
+                    if(1)
                     {
                         //$video_format = Video_format::where('video_format_extension' , $extension)->select('video_format_id')->get();
 
-                        $video_format_id = 4; 
+                        $video_format_id = 0; 
                         $video_category_id = 0;
                         
                         /*if(!empty($video_format)) {

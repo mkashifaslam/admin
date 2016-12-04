@@ -54,6 +54,24 @@ return [
             'visibility' => 'public',
         ],
 
+        'videos' => [
+            'driver' => 'local',
+            'root' => config('app.video_storage'),
+            'visibility' => 'public',
+        ],
+
+         'converted-videos' => [
+            'driver' => 'local',
+            'root' => config('app.converted_video_storage'),
+            'visibility' => 'public',
+        ],
+
+         'thumnails' => [
+            'driver' => 'local',
+            'root' => config('app.video_thumbnail_storage'),
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => 'your-key',

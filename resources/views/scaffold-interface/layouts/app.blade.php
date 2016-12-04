@@ -144,7 +144,7 @@
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<!-- Scripts -->
-    	<script src="{{ asset('js/app.js') }}"></script>
+    	<!-- <script src="{{ asset('js/app.js') }}"></script> -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/js/app.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/js/demo.js"></script>
 		<script src="https://js.pusher.com/3.2/pusher.min.js"></script>
