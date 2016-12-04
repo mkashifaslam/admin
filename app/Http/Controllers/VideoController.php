@@ -90,10 +90,6 @@ class VideoController extends Controller
                 $strRandom = Str::quickRandom();
                 $uploadedFileName = $strRandom.'.'.$extension; // renameing video
 
-                //FFMPEG::convert()->input($fileName)->bitrate(300, 'video')->output($destinationPath.'/'.$uploadedFileName)->go();
-
-                //$converted_file_info = FFMPEG::getMediaInfo($uploadedFileName);
-
                 $upload_status    = $file->move($destinationPath, $uploadedFileName); // uploading file to given path
                 
                 if($upload_status)
@@ -113,37 +109,14 @@ class VideoController extends Controller
                      // get the single frame work poster image of video
                     $thumbnail_status = FFMpeg::fromDisk('videos')
                         ->open($uploadedFileName)
-                        /* ->addFilter(function ($filters) {
-                                $thumbnail_img_width  = env('THUMBNAIL_IMAGE_WIDTH');
-                                $thumbnail_img_heigth = env('THUMBNAIL_IMAGE_HEIGHT');
-                                $filters->resize(new \FFMpeg\Coordinate\Dimension($thumbnail_img_width, $thumbnail_img_heigth));
-                            })*/
                         ->getFrameFromSeconds(10)
                         ->export()
                         ->toDisk('thumnails')
                         ->save($thumbnail_image);
 
-                    // // set the thumbnail image "palyback" video button
-                    // //$water_mark           = config('app.video_thumbnail_storage').'/p.png';
-                    // $water_mark           = '';
-                   
-                    // // get video length and process it
-                    // // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
-                    // $time_to_image    = 15;
-
-                    // $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,160,128,$time_to_image,$water_mark,false,$thumbnail_img_width,$thumbnail_img_heigth);
-
-                    if(1)
-                    {
-                        //$video_format = Video_format::where('video_format_extension' , $extension)->select('video_format_id')->get();
-
                         $video_format_id = 0; 
                         $video_category_id = 0;
                         
-                        /*if(!empty($video_format)) {
-                            $video_format_id = $video_format[0]["video_format_id"]; 
-                        }*/
-
                         $video = new Video;
                         $video->video_id = $video->getLastVideoId();
                         $video->video_title = $fileOriginalName;
@@ -159,11 +132,6 @@ class VideoController extends Controller
                         Session::flash('success', 'Upload successfully'); 
                         
                         Response::json('success', 200);
-                    }
-                    else
-                    {
-                        Response::json('error', 400);
-                    }
                 }
             } else {
                 // sending back with error message.

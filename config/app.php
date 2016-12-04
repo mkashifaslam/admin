@@ -200,7 +200,6 @@ return [
         Recca0120\LaravelTracy\ServiceProvider::class,
         Lakshmajim\Thumbnail\ThumbnailServiceProvider::class,
         Spatie\PaginateRoute\PaginateRouteServiceProvider::class,
-        LinkThrow\Ffmpeg\Provider\FfmpegServiceProvider::class,
         Pbmedia\LaravelFFMpeg\FFMpegServiceProvider::class,
     ],
 
@@ -255,7 +254,6 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Thumbnail' => Lakshmajim\Thumbnail\Facade\Thumbnail::class,
         'PaginateRoute' => Spatie\PaginateRoute\PaginateRouteFacade::class,
-        //'FFMPEG'        => LinkThrow\Ffmpeg\Facade\FfmpegFacade::class,
         'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class
         
     ],
